@@ -578,7 +578,7 @@ nav .items .item:hover {
 }
 .projects-content{
    display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(40rem, auto));
+   grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
    align-items: center;
    gap: 2.5rem;
    margin-top: 5rem;
@@ -918,7 +918,6 @@ html {
       font-size: 50%;
       }
   */
- 
    
    .home-sci{
       width: 16rem;
@@ -938,11 +937,11 @@ html {
    }
 
    .services-content {
-      grid-template-columns: repeat(auto-fit, minmax(32rem, 1fr)); /* Use 1fr instead of auto */
+      grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr)); /* Use 1fr instead of auto */
    }
 
    .projects-content{
-      grid-template-columns: repeat(auto-fit, minmax(32rem, auto));
+      grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
    }
 }
 
