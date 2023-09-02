@@ -936,6 +936,14 @@ html {
       padding: .7rem;
       width: calc(100% / 2);
    }
+
+   .services-content {
+      grid-template-columns: repeat(auto-fit, minmax(32rem, 1fr)); /* Use 1fr instead of auto */
+   }
+
+   .projects-content{
+      grid-template-columns: repeat(auto-fit, minmax(32rem, auto));
+   }
 }
 
 @media (max-width: 462px){
