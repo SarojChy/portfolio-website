@@ -408,6 +408,52 @@ nav .items .item:hover {
 .blog {
    background: var(--second-bg-color);
 }
+  /* Define styles for the colored box */
+  .highlight-box {
+   background-color: #f0f0f0; /* Change this to the desired color */
+   padding: 10px;
+   margin-bottom: 20px;
+   border-radius: 5px;
+ }
+
+ /* Style for h3 inside .highlight-box */
+ .highlight-box h1 {
+   color: #ff0000; /* Change this to the desired color */
+ }
+
+ /* Style for p inside .highlight-box */
+ .highlight-box h2 {
+   color: #0000ff; /* Change this to the desired color */
+ }
+
+ .board-container {
+   display: flex;
+   flex-wrap: wrap;
+   margin-top: 3rem;
+}
+
+.board-img {
+   padding: .7rem;
+   width: calc(100% / 2);
+}
+
+.board-img img {
+   max-width: 100%;
+   height: auto;
+}
+
+.board-container li {
+   width: 100%; /* Each li takes up full width */
+   padding: .7rem;
+}
+
+.instruction {
+   margin-top: 1.5rem;
+   text-align: center;
+   font-size: 1.7rem; /* Adjust the font size as needed */
+}
+
+
 
 /* services section  */
 
