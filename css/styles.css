@@ -97,7 +97,8 @@ section {
    /* background-size: 50%; */
 }
 
-.home-content h1, .home-content p {
+.home-content h1,
+.home-content p {
    max-width: 60%;
 }
 
@@ -242,13 +243,11 @@ section {
 
 .about {
    display: flex;
-   justify-content: flex-end;
+   justify-content: center;
    align-items: center;
    flex-direction: column;
    gap: 2rem;
    background: var(--second-bg-color);
-   /* padding-bottom: 6rem; */
-
 }
 
 .heading {
@@ -262,22 +261,33 @@ span {
 }
 
 .about .education-row {
-   display: flex;
-   flex-wrap: wrap;
+   max-width: 1200px;
+   display: grid;
+   align-items: center;
+   grid-template-columns: 1fr 1fr;
    gap: 3rem;
-   justify-content: space-between;
-   width: 100%;
+}
+
+.about-details {
+   display: flex;
+   flex-direction: column;
+   gap: 5rem;
+   background: var(--second-bg-color);
 }
 
 .about .education-column {
-   flex: 1;
-   text-align: left;
-
+   text-align: center;
+   border: 1px solid var(--main-color);
+   padding: 2rem 1rem;
+   border-radius: 4px;
 }
 
 .about .experience-column {
-   flex: 1;
-   text-align: right;
+   text-align: center;
+   border: 1px solid var(--main-color);
+   padding: 2rem 1rem;
+   border-radius: 4px;
+   height: 100%;
 
 
 }
@@ -341,6 +351,13 @@ span {
 
 .about-content h1 {
    font-size: 2.6rem;
+}
+
+.about-image-section {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 3rem;
 }
 
 .about-content p {
@@ -948,19 +965,20 @@ html {
 /* small tablet screens */
 @media (max-width: 820px) {
 
-  .home {
-   background: none;
-}
+   .home {
+      background: none;
+   }
 
-.home-content {
-   display: flex;
-   align-items: center;
-   flex-direction: column;
-}
+   .home-content {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+   }
 
-.home-content h1, .home-content p {
-   text-align: center;
-}
+   .home-content h1,
+   .home-content p {
+      text-align: center;
+   }
 
    .header {
       background: var(--bg-color);
@@ -1080,6 +1098,15 @@ html {
       }
   */
 
+   .about .education-row {
+      grid-template-columns: 1fr;
+   }
+
+   .about-details {
+      flex-direction: column-reverse;
+      gap: 2rem;
+   }
+
    .home-sci {
       width: 16rem;
    }
@@ -1089,9 +1116,7 @@ html {
       height: 3.8rem;
    }
 
-   .about {
-      padding-bottom: 20rem;
-   }
+   
 
    .gallery-img .image {
       padding: .7rem;
