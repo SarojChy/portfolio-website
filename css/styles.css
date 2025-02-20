@@ -381,7 +381,8 @@ span {
    display: flex;
    flex-direction: column;
    align-items: center;
-   gap: 2rem;
+   gap: 3rem;
+   margin-bottom: 2rem;
 }
 
 .gallery-wrapper .btn-box {
@@ -723,7 +724,6 @@ nav .items .item:hover {
    grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
    align-items: center;
    gap: 2.5rem;
-   margin-top: 5rem;
 }
 
 .row {
@@ -731,6 +731,7 @@ nav .items .item:hover {
    overflow: hidden;
    border-radius: .8rem;
    cursor: pointer;
+   height: 100%;
 }
 
 .row img {
@@ -879,14 +880,16 @@ nav .items .item:hover {
 
 .footer {
    display: flex;
-   justify-content: space-between;
+   max-width: 1500px;
+   width: 100%;
+   justify-content: space-around;
    align-items: center;
    flex-wrap: wrap;
    padding: 1.5rem 9%;
 }
 
 .footer-text p {
-   font-size: 1.6rem;
+   font-size: 1.5rem;
 }
 
 .footer-iconTop a {
@@ -1140,6 +1143,16 @@ html {
       height: 3.8rem;
    }
 
+   .footer {
+      flex-direction: column-reverse;
+      align-items: center;
+      justify-content: center;
+   }
+
+   .footer-text {
+      text-align: center;
+      margin-top: 1rem;
+   }
    
 
    .gallery-img .image {
@@ -1198,10 +1211,6 @@ html {
 
    .contact form .input-box .input-field {
       width: 100%;
-   }
-
-   .footer {
-      flex-direction: column-reverse;
    }
 
    .footer p {
