@@ -488,6 +488,10 @@ nav .items .item:hover {
 
 }
 
+.highlight-box h1:hover, .highlight-box h2:hover {
+   color: #0000ff;
+}
+
 .board-container {
    display: flex;
    flex-wrap: wrap;
@@ -497,13 +501,22 @@ nav .items .item:hover {
 
 
 .board-img {
+   display: flex;
+   flex-direction: column;
    padding: .7rem;
    width: calc(100% / 2);
 }
 
+.board-img h1 {
+   font-size: 1.5rem;
+}
+
+
 .board-img img {
    max-width: 100%;
    height: auto;
+   flex: 1;
+   aspect-ratio: 1.6;
 }
 
 .board-container li {
@@ -515,7 +528,7 @@ nav .items .item:hover {
 .instruction {
    margin-top: 1.5rem;
    text-align: center;
-   font-size: 1.7rem;
+   font-size: 1.25rem;
    /* Adjust the font size as needed */
 }
 
