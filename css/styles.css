@@ -1220,7 +1220,7 @@ html {
 }
 
 /* extra small phone screens */
-@media (max-width: 375px) {
+@media (max-width: 390px) {
 
    /* html {
       font-size: 40%;
