@@ -1,75 +1,159 @@
-//toggle icon bar
+const navToggle = document.querySelector("#nav-toggle");
+const siteNav = document.querySelector("#site-nav");
+const siteHeader = document.querySelector(".site-header");
+const themeToggle = document.querySelector("#theme-toggle");
+const themeIcon = themeToggle?.querySelector("i");
+const themeMeta = document.querySelector('meta[name="theme-color"]');
+const navLinks = [...document.querySelectorAll(".site-nav a")];
+const sections = [...document.querySelectorAll("main section[id]")];
+const revealItems = [...document.querySelectorAll("[data-reveal]")];
+const roleRotator = document.querySelector(".role-rotator");
+const filterButtons = [...document.querySelectorAll(".filter-button")];
+const galleryCards = [...document.querySelectorAll(".gallery-card")];
+const backToTopLink = document.querySelector(".back-to-top");
+const root = document.documentElement;
+const themeColors = {
+   dark: "#0d1218",
+   light: "#f5efe6",
+};
 
-let menuIcon = document.querySelector('#menu-icon');
-let navbar = document.querySelector('.navbar');
+const syncHeaderOffset = () => {
+   if (!siteHeader) {
+      return;
+   }
 
-menuIcon.onclick = () => {
-   menuIcon.classList.toggle('bx-x');
-   navbar.classList.toggle('active');
+   document.documentElement.style.setProperty("--header-offset", `${siteHeader.offsetHeight}px`);
+};
+
+const applyTheme = (theme, persist = true) => {
+   root.dataset.theme = theme;
+
+   if (persist) {
+      localStorage.setItem("theme", theme);
+   }
+
+   if (themeMeta) {
+      themeMeta.setAttribute("content", themeColors[theme]);
+   }
+
+   if (themeToggle) {
+      const isDark = theme === "dark";
+      themeToggle.setAttribute("aria-pressed", String(isDark));
+      themeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+   }
+
+   if (themeIcon) {
+      themeIcon.className = theme === "dark" ? "bx bx-sun" : "bx bx-moon";
+   }
+};
+
+applyTheme(root.dataset.theme || "dark", false);
+syncHeaderOffset();
+
+if (themeToggle) {
+   themeToggle.addEventListener("click", () => {
+      const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
+      applyTheme(nextTheme);
+   });
 }
 
-// scroll section 
-
-let sections = document.querySelectorAll('section');
-let navLinks = document.querySelectorAll('header nav a');
-
-window.onscroll = () => {
-   sections.forEach(sec => {
-      let top = window.scrollY;
-      let offset = sec.offsetTop - 100;
-      let height = sec.offsetHeight;
-      let id = sec.getAttribute('id');
-
-   
-      if(top >= offset && top < offset + height){
-         //activaet navbar Links
-
-         navLinks.forEach(links =>{
-            links.classList.remove('active');
-            document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
-         });
-      }
+if (navToggle && siteNav) {
+   navToggle.addEventListener("click", () => {
+      const isExpanded = navToggle.getAttribute("aria-expanded") === "true";
+      navToggle.setAttribute("aria-expanded", String(!isExpanded));
+      siteNav.classList.toggle("is-open", !isExpanded);
    });
 
-   //sticky header
-   let header = document.querySelector('header');
-   header.classList.toggle('sticky', window.scrollY > 100);
-
-
-   //remove toggle icon and navbar when click navbar links (scroll)
-   menuIcon.classList.remove('bx-x');
-   navbar.classList.remove('active');
+   navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+         navToggle.setAttribute("aria-expanded", "false");
+         siteNav.classList.remove("is-open");
+      });
+   });
 }
 
+const updateActiveSection = () => {
+   const scrollMarker = window.scrollY + 160;
 
+   sections.forEach((section) => {
+      const start = section.offsetTop;
+      const end = start + section.offsetHeight;
+      const link = document.querySelector(`.site-nav a[href="#${section.id}"]`);
 
-
-
-
-
-// selecting all required elemets
-
-const filterItem = document.querySelector(".items");
-const filterImg = document.querySelectorAll(".image");
-
-window.onload = ()=> {
-   filterItem.onclick = (selectionItem)=>{
-      if(selectionItem.target.classList.contains("item")){
-         filterItem.querySelector(".active").classList.remove("active"); //remove active class which is in the first
-         selectionItem.target.classList.add("active"); //add that acytive class on the iser selected element or item
-         let filterName = selectionItem.target.getAttribute("data-name");
-         filterImg.forEach((Image)=>{
-            let filterImages = Image.getAttribute("data-name");
-            if((filterImages == filterName) || filterName == "all"){
-               Image.classList.add("show");
-            }else{
-               Image.classList.add("hide");
-               Image.classList.remove("show");
-            }
-         
-         });
+      if (!link) {
+         return;
       }
+
+      if (scrollMarker >= start && scrollMarker < end) {
+         navLinks.forEach((navLink) => navLink.classList.remove("is-active"));
+         link.classList.add("is-active");
+      }
+   });
+};
+
+const revealObserver = new IntersectionObserver(
+   (entries) => {
+      entries.forEach((entry) => {
+         if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+         }
+      });
+   },
+   {
+      threshold: 0.16,
+      rootMargin: "0px 0px -50px 0px",
+   }
+);
+
+revealItems.forEach((item) => revealObserver.observe(item));
+
+if (roleRotator) {
+   const roles = (roleRotator.dataset.roles || "")
+      .split("|")
+      .map((item) => item.trim())
+      .filter(Boolean);
+
+   if (roles.length > 1) {
+      let roleIndex = 0;
+
+      window.setInterval(() => {
+         roleIndex = (roleIndex + 1) % roles.length;
+         roleRotator.textContent = roles[roleIndex];
+      }, 2200);
    }
 }
 
+filterButtons.forEach((button) => {
+   button.addEventListener("click", () => {
+      const selectedFilter = button.dataset.filter;
 
+      filterButtons.forEach((item) => {
+         const isActive = item === button;
+         item.classList.toggle("is-active", isActive);
+         item.setAttribute("aria-pressed", String(isActive));
+      });
+
+      galleryCards.forEach((card) => {
+         const matches = selectedFilter === "all" || card.dataset.category === selectedFilter;
+         card.classList.toggle("is-hidden", !matches);
+      });
+   });
+});
+
+if (backToTopLink) {
+   backToTopLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+         top: 0,
+         behavior: "smooth",
+      });
+   });
+}
+
+window.addEventListener("resize", syncHeaderOffset);
+window.addEventListener("scroll", updateActiveSection, { passive: true });
+window.addEventListener("load", () => {
+   syncHeaderOffset();
+   updateActiveSection();
+});
